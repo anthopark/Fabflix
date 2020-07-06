@@ -1,7 +1,8 @@
 # Fabflix Specific
 
 cs122b-key.pem
-*.sql
+mysql-scripts/
+logs/
 
 # Created by https://www.gitignore.io/api/java,maven,eclipse,java-web,intellij
 

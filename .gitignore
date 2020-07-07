@@ -3,6 +3,10 @@
 cs122b-key.pem
 mysql-scripts/
 logs/
+context.xml
+web.xml
+*.iml
+.idea/
 
 # Created by https://www.gitignore.io/api/java,maven,eclipse,java-web,intellij
 

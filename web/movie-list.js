@@ -2,7 +2,7 @@
 
 function handleMovieListResult(resultData) {
     console.log(resultData);
-    const tableBody = document.querySelector("#movie-table-body");
+    const tableBody = document.querySelector("#movie-list-tbody");
 
     resultData.forEach((movieData, i) => {
         let row = tableBody.insertRow(i);

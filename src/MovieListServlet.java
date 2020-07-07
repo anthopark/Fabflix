@@ -15,8 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @WebServlet(name = "MovieListServlet", urlPatterns = "/api/movie-list")
 public class MovieListServlet extends HttpServlet {
@@ -26,9 +25,6 @@ public class MovieListServlet extends HttpServlet {
     @Resource(name = "jdbc/moviedb")
     private DataSource dataSource;
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -86,8 +82,8 @@ public class MovieListServlet extends HttpServlet {
             dbcon.close();
 
         } catch (Exception e) {
-            JsonObject jsonObject = new JsonObject();
             e.printStackTrace();
+            JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
 
@@ -101,9 +97,7 @@ public class MovieListServlet extends HttpServlet {
             throws java.sql.SQLException {
         String query = "SELECT * FROM ratings ORDER BY rating DESC LIMIT ?";
 
-        PreparedStatement statement = null;
-
-        statement = dbcon.prepareStatement(query);
+        PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setInt(1, numResult);
         return statement.executeQuery();
 
@@ -114,11 +108,10 @@ public class MovieListServlet extends HttpServlet {
         String query = "select * from genres where id in " +
                 "(select genreId from genres_in_movies as gim where gim.movieId = ?) limit ?";
 
-        PreparedStatement statement = null;
-
-        statement = dbcon.prepareStatement(query);
+        PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setString(1, movieId);
         statement.setInt(2, numResult);
+
         return statement.executeQuery();
 
     }
@@ -128,11 +121,10 @@ public class MovieListServlet extends HttpServlet {
         String query = "select * from stars where id in " +
                 "(select starId from stars_in_movies as sim where sim.movieId = ?) limit ?";
 
-        PreparedStatement statement = null;
-
-        statement = dbcon.prepareStatement(query);
+        PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setString(1, movieId);
         statement.setInt(2, numResult);
+
         return statement.executeQuery();
 
     }
@@ -140,10 +132,10 @@ public class MovieListServlet extends HttpServlet {
     private ResultSet getMovieSet(Connection dbcon, String movieId)
             throws java.sql.SQLException {
         String query = "select * from movies where id = ?";
-        PreparedStatement statement = null;
 
-        statement = dbcon.prepareStatement(query);
+        PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setString(1, movieId);
+
         return statement.executeQuery();
 
     }

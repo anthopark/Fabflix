@@ -9,5 +9,5 @@
               type="javax.sql.DataSource"
               username="anthopark"
               password="7292Kungml$"
-              url="jdbc:mysql://localhost:3306/moviedbexample"/>
+              url="jdbc:mysql://localhost:3306/moviedb"/>
 </Context>

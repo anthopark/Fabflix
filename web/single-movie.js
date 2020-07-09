@@ -18,6 +18,8 @@ function handleSingleMovieResult(movieData) {
     console.log(movieData);
     const movieTitle = document.querySelector("#movie-title");
     const movieInfo = document.querySelector("#movie-info");
+    const genreList = document.querySelector("#genre-list");
+    const starList = document.querySelector("#star-list");
 
     movieTitle.textContent = movieData[0].movie_title;
     movieInfo.innerHTML = `
@@ -25,6 +27,18 @@ function handleSingleMovieResult(movieData) {
         <p>Director: ${movieData[0].movie_director}</p>
         <p>Rating: ${movieData[0].rating}</p>
     `;
+
+    movieData[0].genres.forEach(g => {
+        let li = document.createElement('li');
+        li.innerHTML = g.name;
+        genreList.appendChild(li);
+    });
+
+    movieData[0].stars.forEach(s => {
+        let li = document.createElement('li');
+        li.innerHTML = `<a href="single-star.html?id=${s.id}">${s.name}</a>`;
+        starList.appendChild(li);
+    });
 
 
 }

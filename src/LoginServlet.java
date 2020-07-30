@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,14 +22,10 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-
-
         String userEmail = request.getParameter("email");
         String userPassword = request.getParameter("password");
 
         JsonObject jsonResponse = new JsonObject();
-
-        jsonResponse.addProperty("Hey", "Hi");
 
         System.out.println(userEmail);
         System.out.println(userPassword);
@@ -36,11 +33,23 @@ public class LoginServlet extends HttpServlet {
             Connection dbcon = dataSource.getConnection();
             HashMap<String, String> userInfo = retrieveUser(dbcon, userEmail);
 
+            System.out.println(userInfo.get("pw"));
+
             if (userInfo.size() == 1 && userInfo.get("pw").equals(userPassword)) {
                 System.out.println("Login successful");
-//                request.getSession().setAttribute("user", new User(userEmail));
+                jsonResponse.addProperty("login-status", "success");
+                request.getSession().setAttribute("user", new User(userEmail));
+
             } else {
                 System.out.println("Login unsuccessful");
+                jsonResponse.addProperty("login-status", "fail");
+                if (userInfo.size() == 0) {
+                    // wrong email
+                    jsonResponse.addProperty("message", "Invalid Email");
+                } else {
+                    // wrong pw
+                    jsonResponse.addProperty("message", "Invalid Password");
+                }
             }
 
             response.getWriter().write(jsonResponse.toString());

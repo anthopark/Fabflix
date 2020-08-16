@@ -1,0 +1,12 @@
+.header {
+    height: 5rem;
+}
+
+.fabflix-logo {
+    padding-left: 1rem;
+}
+
+#logout-btn {
+    color: #F5E7A8;
+    background-color: #126173;
+}

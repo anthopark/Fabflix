@@ -1,0 +1,10 @@
+.login-card {
+    background-color: rgb(37, 50, 56);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#login-btn {
+    color: #64357a;
+    background-color: #88a5a5;
+}

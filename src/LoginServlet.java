@@ -1,4 +1,5 @@
 import com.google.gson.JsonObject;
+import sun.misc.IOUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.annotation.WebServlet;
@@ -6,12 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
+
 
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
@@ -29,6 +30,7 @@ public class LoginServlet extends HttpServlet {
 
         System.out.println(userEmail);
         System.out.println(userPassword);
+
         try {
             Connection dbcon = dataSource.getConnection();
             HashMap<String, String> userInfo = retrieveUser(dbcon, userEmail);
@@ -37,12 +39,12 @@ public class LoginServlet extends HttpServlet {
 
             if (userInfo.size() == 1 && userInfo.get("pw").equals(userPassword)) {
                 System.out.println("Login successful");
-                jsonResponse.addProperty("login-status", "success");
+                jsonResponse.addProperty("loginStatus", "success");
                 request.getSession().setAttribute("user", new User(userEmail));
 
             } else {
                 System.out.println("Login unsuccessful");
-                jsonResponse.addProperty("login-status", "fail");
+                jsonResponse.addProperty("loginStatus", "fail");
                 if (userInfo.size() == 0) {
                     // wrong email
                     jsonResponse.addProperty("message", "Invalid Email");

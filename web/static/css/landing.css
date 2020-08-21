@@ -1,12 +1,19 @@
-.header {
-    height: 5rem;
+.search {
+    background-color: rgba(66, 66, 66, 0.548);
+    padding: 3rem;
+    width: 500px;
+    border: 5px solid black;
+    border-radius: 10px;
 }
 
-.fabflix-logo {
-    padding-left: 1rem;
+.search-form {
+
 }
 
-#logout-btn {
-    color: #F5E7A8;
-    background-color: #126173;
+
+.browse {
+    padding: 10px;
+    width: 100%;
+    border: 5px solid black;
+    border-radius: 10px;
 }

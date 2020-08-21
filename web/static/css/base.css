@@ -6,15 +6,10 @@ body {
     color: #ffffff
 }
 
-.header {
-    width: 100%;
-    margin-bottom: 5rem;
-    padding: 1rem;
-    background-color: #000000;
+.brand-title {
+    color: red;
 }
 
-.fabflix-logo {
-    font-size: 30px;
-    color: red;
-    text-align: center;
+.navbar {
+    margin-bottom: 3rem;
 }

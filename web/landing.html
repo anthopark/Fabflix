@@ -30,14 +30,14 @@
         <div class="row">
             <div class="search">
                 <h3 class="section-title">Search Movies</h3>
-                <form class="form search-form" id="search-form">
+                <form class="form search-form" id="search-form" method="GET">
                     <div class="form-group">
                         <label for="movie-title">Title</label>
                         <input type="text" name="movie-title" id="movie-title" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="movie-year">Year</label>
-                        <input type="number" name="movie-year" id="movie-year" class="form-control">
+                        <input type="number" name="movie-year" id="movie-year" class="form-control" min="1900" max="2030">
                     </div>
                     <div class="form-group">
                         <label for="movie-director">Director</label>
@@ -46,6 +46,9 @@
                     <div class="form-group">
                         <label for="movie-star">Movie Star</label>
                         <input type="text" name="movie-star" id="movie-star" class="form-control">
+                    </div>
+                    <div class="message-box">
+                        <p id="search-form-message"></p>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Search</button>

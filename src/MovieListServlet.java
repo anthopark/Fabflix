@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -31,25 +32,29 @@ public class MovieListServlet extends HttpServlet {
         response.setContentType("application/json");
 
         PrintWriter out = response.getWriter();
+        String searchQuery = request.getParameter("search-query");
+        System.out.println(searchQuery);
 
         try {
             Connection dbcon = dataSource.getConnection();
 
-            ResultSet topMoviesSet = getTopNRatedMovies(dbcon, 20);
+            ResultSet movieResults = null;
+            if (searchQuery != null) {
+                movieResults = getSearchResult(dbcon, searchQuery);
+            }
 
             JsonArray jsonArray = new JsonArray();
 
-            while (topMoviesSet.next()) {
-                String movieId = topMoviesSet.getString("movieId");
-                String movieRating = topMoviesSet.getString("rating");
+            while (movieResults.next()) {
 
+                String movieTitle = movieResults.getString("title");
+                String movieYear = movieResults.getString("year");
+                String movieDirector = movieResults.getString("director");
+                String movieId = movieResults.getString("id");
 
-                ResultSet theMovieSet = getMovieSet(dbcon, movieId);
-                theMovieSet.next();
-
-                String movieTitle = theMovieSet.getString("title");
-                String movieYear = theMovieSet.getString("year");
-                String movieDirector = theMovieSet.getString("director");
+                ResultSet theMovieRatingSet = getMovieRating(dbcon, movieId);
+                theMovieRatingSet.next();
+                String movieRating = theMovieRatingSet.getString("rating");
 
                 ResultSet genresSet = getNGenresInMovie(dbcon, movieId, 3);
                 ResultSet starsSet = getNStarsInMovie(dbcon, movieId, 3);
@@ -68,7 +73,6 @@ public class MovieListServlet extends HttpServlet {
 
                 jsonArray.add(jsonObject);
 
-                theMovieSet.close();
                 genresSet.close();
                 starsSet.close();
             }
@@ -78,7 +82,7 @@ public class MovieListServlet extends HttpServlet {
 
             response.setStatus(200);
 
-            topMoviesSet.close();
+            movieResults.close();
             dbcon.close();
 
         } catch (Exception e) {
@@ -93,6 +97,13 @@ public class MovieListServlet extends HttpServlet {
         out.close();
     }
 
+    private ResultSet getSearchResult(Connection dbcon, String query)
+            throws java.sql.SQLException {
+
+        PreparedStatement statement = dbcon.prepareStatement(query);
+        return statement.executeQuery();
+    }
+
     private ResultSet getTopNRatedMovies(Connection dbcon, int numResult)
             throws java.sql.SQLException {
         String query = "SELECT * FROM ratings ORDER BY rating DESC LIMIT ?";
@@ -101,6 +112,16 @@ public class MovieListServlet extends HttpServlet {
         statement.setInt(1, numResult);
         return statement.executeQuery();
 
+    }
+
+    private ResultSet getMovieRating(Connection dbcon, String movieId)
+            throws java.sql.SQLException {
+        String query = "SELECT * FROM ratings WHERE movieId = ?";
+
+        PreparedStatement statement = dbcon.prepareStatement(query);
+        statement.setString(1, movieId);
+
+        return statement.executeQuery();
     }
 
     private ResultSet getNGenresInMovie(Connection dbcon, String movieId, int numResult)

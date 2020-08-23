@@ -4,6 +4,7 @@
     width: 500px;
     border: 5px solid black;
     border-radius: 10px;
+    margin: auto;
 }
 
 .search-form {
@@ -13,7 +14,17 @@
 
 .browse {
     padding: 10px;
-    width: 100%;
+    width: 500px;
     border: 5px solid black;
     border-radius: 10px;
+    margin: auto;
 }
+
+a.genre-unfold-link, a.title-unfold-link {
+    text-decoration: none;
+}
+
+.genre-link-box, .title-link-box {
+    display: none;
+}
+

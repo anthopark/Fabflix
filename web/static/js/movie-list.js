@@ -70,14 +70,27 @@ function handleMovieListResult(resultData) {
     })
 }
 
-const title = getParameterByName('title');
-const year = getParameterByName('year');
-const director = getParameterByName('director');
-const star = getParameterByName('star');
+let sqlQuery = null;
 
-console.log(title, year, director, star);
+if (getParameterByName('browse')) {
+    if (getParameterByName('genre')) {
+        const genreId = getParameterByName('id');
+        console.log(genreId);
+    } else {
 
-const sqlQuery = buildSearchSQL(title, year, director, star);
+    }
+
+} else {
+    const title = getParameterByName('title');
+    const year = getParameterByName('year');
+    const director = getParameterByName('director');
+    const star = getParameterByName('star');
+
+    console.log(title, year, director, star);
+
+    sqlQuery = buildSearchSQL(title, year, director, star);
+}
+
 
 console.log(sqlQuery);
 

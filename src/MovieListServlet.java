@@ -51,9 +51,12 @@ public class MovieListServlet extends HttpServlet {
                 String movieDirector = movieResults.getString("director");
                 String movieId = movieResults.getString("id");
 
+                String movieRating = null;
                 ResultSet theMovieRatingSet = getMovieRating(dbcon, movieId);
-                theMovieRatingSet.next();
-                String movieRating = theMovieRatingSet.getString("rating");
+                if (theMovieRatingSet.next()) {
+                    movieRating = theMovieRatingSet.getString("rating");
+                }
+
 
                 ResultSet genresSet = getNGenresInMovie(dbcon, movieId, 3);
                 ResultSet starsSet = getNStarsInMovie(dbcon, movieId, 3);

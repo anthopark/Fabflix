@@ -17,12 +17,6 @@ document.querySelectorAll('.collapse-btn').forEach((elem) => {
     })
 })
 
-
-fetch('api/landing')
-    .then(response => response.json())
-    .then(data => handleGenreData(data));
-
-
 function handleGenreData(data) {
     console.log(typeof data);
     console.log(data);
@@ -51,3 +45,34 @@ document.querySelector('#genre-list').addEventListener('click', (e) => {
         window.location.replace(url);
     }
 })
+
+function populateTitleAlphaNums() {
+    const numTitleBoxEl = document.querySelector('#num-title-sub-box');
+    const alphaTitleBoxEl = document.querySelector('#alpha-title-sub-box');
+    const numbers = [...Array(10).keys()];
+    const alphabets = [...String.fromCharCode(...[...Array('Z'.charCodeAt(0) - 'A'.charCodeAt(0) + 1).keys()].map(i => i + 'A'.charCodeAt(0)))];
+
+    const numberLinkHTMLStrings =  numbers.map((num) => {
+        return `<a class="title-link" data-value="${num}">
+                    ${num}
+                </a>`;
+    })
+
+    const alphaLinkHTMLStrings = alphabets.map((alphabet) => {
+        return `<a class="title-link" data-value="${alphabet}">
+                    ${alphabet}
+                </a>`
+    })
+
+    numTitleBoxEl.innerHTML = numberLinkHTMLStrings.join('');
+    alphaTitleBoxEl.innerHTML = alphaLinkHTMLStrings.join('');
+
+    console.log(numberLinkHTMLStrings);
+    console.log(alphaLinkHTMLStrings);
+}
+
+populateTitleAlphaNums()
+
+// fetch('api/landing')
+//     .then(response => response.json())
+//     .then(data => handleGenreData(data));

@@ -38,6 +38,10 @@ function buildSearchSQL(title, year, director, star) {
     return sqlQuery;
 }
 
+function buildBrowseGenreSQL(genreId) {
+    return `select * from movies where id in (select movieId from genres_in_movies where genreId = ${genreId});`
+}
+
 function handleMovieListResult(resultData) {
     console.log(resultData);
     const tableBody = document.querySelector("#movie-list-tbody");
@@ -76,6 +80,7 @@ if (getParameterByName('browse')) {
     if (getParameterByName('genre')) {
         const genreId = getParameterByName('id');
         console.log(genreId);
+        sqlQuery = buildBrowseGenreSQL(genreId)
     } else {
 
     }

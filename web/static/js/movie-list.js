@@ -39,7 +39,14 @@ function buildSearchSQL(title, year, director, star) {
 }
 
 function buildBrowseGenreSQL(genreId) {
-    return `select * from movies where id in (select movieId from genres_in_movies where genreId = ${genreId});`
+    return `select * from movies where id in (select movieId from genres_in_movies where genreId = ${genreId});`;
+}
+
+function buildBrowseTitleSQL(startingChar) {
+    if (startingChar === '*') {
+        return `select * from movies where lower(title) regexp '^[^a-zA-Z0-9\s].*$';`;
+    }
+    return `select * from movies where lower(title) like '${startingChar}%';`;
 }
 
 function handleMovieListResult(resultData) {
@@ -82,7 +89,9 @@ if (getParameterByName('browse')) {
         console.log(genreId);
         sqlQuery = buildBrowseGenreSQL(genreId)
     } else {
-
+        const startingAlphanum = getParameterByName('title');
+        console.log(startingAlphanum);
+        sqlQuery = buildBrowseTitleSQL(startingAlphanum);
     }
 
 } else {

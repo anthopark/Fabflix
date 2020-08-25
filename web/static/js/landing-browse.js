@@ -1,3 +1,6 @@
+window.addEventListener('DOMContentLoaded', populateTitleAlphaNums);
+window.addEventListener('DOMContentLoaded', registerTitleLinkEvent);
+
 document.querySelector('.genre-unfold-link').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('.title-link-box').style.display = 'none';
@@ -16,6 +19,7 @@ document.querySelectorAll('.collapse-btn').forEach((elem) => {
         e.target.parentElement.style.display = 'none';
     })
 })
+
 
 function handleGenreData(data) {
     console.log(typeof data);
@@ -66,13 +70,22 @@ function populateTitleAlphaNums() {
 
     numTitleBoxEl.innerHTML = numberLinkHTMLStrings.join('');
     alphaTitleBoxEl.innerHTML = alphaLinkHTMLStrings.join('');
-
-    console.log(numberLinkHTMLStrings);
-    console.log(alphaLinkHTMLStrings);
 }
 
-populateTitleAlphaNums()
+function registerTitleLinkEvent() {
+    document.querySelectorAll('.title-link').forEach((elem) => {
+        elem.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (e.target.className === 'title-link') {
+                const url = `movie-list.html?browse=1&title=${e.target.dataset.value.toLowerCase()}`;
+                console.log(url);
+                window.location.replace(url);
+            }
+            
+        })
+    })    
+}
 
-// fetch('api/landing')
-//     .then(response => response.json())
-//     .then(data => handleGenreData(data));
+fetch('api/landing')
+    .then(response => response.json())
+    .then(data => handleGenreData(data));

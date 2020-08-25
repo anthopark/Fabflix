@@ -7,13 +7,9 @@
     margin: auto;
 }
 
-.search-form {
-
-}
-
-
 .browse {
-    padding: 10px;
+    background-color: rgba(66, 66, 66, 0.548);
+    padding: 3rem;
     width: 25rem;
     border: 5px solid black;
     border-radius: 10px;
@@ -28,3 +24,11 @@ a.genre-unfold-link, a.title-unfold-link {
     display: none;
 }
 
+#num-title-sub-box, #alpha-title-sub-box {
+    margin: 5px;
+}
+
+a.title-link {
+    margin: 2px;
+    font-size: 20px;
+}

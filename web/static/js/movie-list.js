@@ -88,7 +88,7 @@ function handleMovieListResult(resultData) {
             </div>
         `;
 
-        movieItemEl.querySelector('#title-year').textContent = `${movieData.movie_title} (${movieData.movie_year})`;
+        movieItemEl.querySelector('#title-year').innerHTML = `<a class="title-link" href="single-movie.html?id=${movieData.movie_id}">${movieData.movie_title}</a> (${movieData.movie_year})`;
         movieItemEl.querySelector('#director').textContent = `${movieData.movie_director}`;
         movieItemEl.querySelector('#rating-value').textContent = `${movieData.rating}`;
         

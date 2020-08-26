@@ -27,30 +27,53 @@
 
     <div class="container">
         <div class="movie-result-box">
-            <h3 id="list-title">Showing result for...<span id="movie-query"></span></h3>
-            <div class="movie-list-box">
-                <div class="movie-item">
-                    <div class="row">
-                        <div class="col title-box">
-                            <h4 id="title-year">Title(year)</h4>
-                            <p id="movie-director">Directed by <span id="director"></span></p>
+            <div class="row listing-control-box">
+                <div class="col text-div">
+                    <h3 id="list-title">Showing result for...<span id="movie-query"></span></h3>
+                </div>
+                <div class="col listing-controls">
+                    <div class="dropdown sorting-dropdown float-right">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Number of Items
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">10</a>
+                            <a class="dropdown-item" href="#">25</a>
+                            <a class="dropdown-item" href="#">50</a>
+                            <a class="dropdown-item" href="#">100</a>
                         </div>
-                        <div class="col rating-box"><h4 id="rating"><span id="rating-value"></span>Rating</h4></div>
-                        <div class="col genre-box">
-                            <h4>Genres</h4>
-                            <ul class="short-list" id="genre-list"></ul>
+                    </div>
+                    <div class="dropdown sorting-dropdown float-right">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort Order
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                            <a class="dropdown-item" href="#">high to low</a>
+                            <a class="dropdown-item" href="#">low to high</a>
                         </div>
-                        <div class="col star-box">
-                            <h4>Stars</h4>
-                            <ul class="short-list" id="star-list"></ul>
+                    </div>
+                    <div class="dropdown sorting-dropdown float-right">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort By
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">title then rating</a>
+                            <a class="dropdown-item" href="#">rating then title</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="movie-list-box">
+
+            </div>
         </div>
     </div>
 
-    
+
 
 
 
@@ -64,4 +87,5 @@
     <script src="static/js/logout.js"></script>
     <script src="static/js/movie-list.js"></script>
 </body>
+
 </html>

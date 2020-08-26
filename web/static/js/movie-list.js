@@ -51,33 +51,74 @@ function buildBrowseTitleSQL(startingChar) {
 
 function handleMovieListResult(resultData) {
     console.log(resultData);
-    const tableBody = document.querySelector("#movie-list-tbody");
+    const movieListBoxEl = document.querySelector('.movie-list-box');
 
-    resultData.forEach((movieData, i) => {
-        let row = tableBody.insertRow(i);
+    resultData.forEach((movieData) => {
 
-        let title = row.insertCell(0);
-        title.innerHTML =
-            `<a href="single-movie.html?id=${movieData.movie_id}">${movieData.movie_title}</a>`;
+        movieData.movie_stars.sort((a, b) => {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
+        }).sort((a, b) => { // sort by desc
+            if (a.starringNum < b.starringNum) return 1;
+            if (a.starringNum > b.starringNum) return -1;
+            return 0;
+        });
 
-        let year = row.insertCell(1);
-        year.innerHTML = movieData.movie_year;
 
-        let director = row.insertCell(2);
-        director.innerHTML = movieData.movie_director;
 
-        let genres = row.insertCell(3);
-        genres.innerHTML = movieData.movie_genres.map(g => {
-            return g.name;
-        }).join(", ");
+        const movieItemEl = document.createElement('div')
+        movieItemEl.className = 'movie-item';
+        movieItemEl.innerHTML =
+            `
+            <div class="row">
+                <div class="col title-box">
+                        <h4 id="title-year"></h4>
+                        <h6 id="movie-director">Directed by <span id="director"></span></h6>
+                </div>
+                <div class="col rating-box"><h4 id="rating"><span id="rating-value"></span> Rating</h4></div>
+                <div class="col genre-box">
+                    <h4>Genres</h4>
+                    <ul class="short-list" id="genre-list"></ul>
+                </div>
+                <div class="col star-box">
+                    <h4>Stars</h4>
+                    <ul class="short-list" id="star-list"></ul>
+                </div>
+            </div>
+        `;
 
-        let stars = row.insertCell(4);
-        stars.innerHTML = movieData.movie_stars.map(s => {
-            return `<a href="single-star.html?id=${s.id}">${s.name}</a>`;
-        }).join(", ");
+        movieItemEl.querySelector('#title-year').textContent = `${movieData.movie_title} (${movieData.movie_year})`;
+        movieItemEl.querySelector('#director').textContent = `${movieData.movie_director}`;
+        movieItemEl.querySelector('#rating-value').textContent = `${movieData.rating}`;
+        
+        // displaying first 3 genres sorted by alphabet
+        const genreListEl = movieItemEl.querySelector('#genre-list');
+        let i = 0;
+        while (i < movieData.movie_genres.length) {
+            if (i >= 3) break;
+            const genreItemEl = document.createElement('li');
+            genreItemEl.className = 'genre-item';
+            genreItemEl.innerHTML = 
+                `<a class="genre-link" href="movie-list.html?browse=1&genre=1&id=${movieData.movie_genres[i].id}">${movieData.movie_genres[i].name}</a>`;
+            genreListEl.appendChild(genreItemEl);
+            i++;
+        }
 
-        let rating = row.insertCell(5);
-        rating.innerHTML = movieData.rating;
+        //displaying first 3 stars sorted by starring num relative to alphabet
+        const starListEl = movieItemEl.querySelector('#star-list');
+        i = 0;
+        while (i < movieData.movie_stars.length) {
+            if (i >= 3) break;
+            const starItemEl = document.createElement('li');
+            starItemEl.className = 'star-item';
+            starItemEl.innerHTML = 
+                `<a class="star-link" href="single-star.html?id=${movieData.movie_stars[i].id}">${movieData.movie_stars[i].name}</a>`;
+            starListEl.appendChild(starItemEl);
+            i++;
+        }
+
+        movieListBoxEl.appendChild(movieItemEl);
     })
 }
 

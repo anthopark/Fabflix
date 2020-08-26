@@ -62,7 +62,7 @@ public class MovieListServlet extends HttpServlet {
                 ResultSet starsSet = getStarsInMovie(dbcon, movieId);
 
                 JsonArray genres = buildJsonArray(genresSet, new ArrayList<String>(Arrays.asList("id", "name")));
-                JsonArray stars = buildJsonArray(starsSet, new ArrayList<String>(Arrays.asList("id", "name", "birthYear")));
+                JsonArray stars = buildJsonArrayStar(dbcon, starsSet, new ArrayList<String>(Arrays.asList("id", "name", "birthYear")));
 
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("movie_id", movieId);
@@ -171,6 +171,35 @@ public class MovieListServlet extends HttpServlet {
             for (String prop : properties) {
                 json.addProperty(prop, rs.getString(prop));
             }
+            resultArray.add(json);
+        }
+
+        return resultArray;
+    }
+
+    private JsonArray buildJsonArrayStar(Connection dbcon, ResultSet rs, ArrayList<String> properties)
+            throws java.sql.SQLException {
+        JsonArray resultArray = new JsonArray();
+
+        while (rs.next()) {
+            JsonObject json = new JsonObject();
+
+            for (String prop : properties) {
+                json.addProperty(prop, rs.getString(prop));
+            }
+
+            String starId = rs.getString("id");
+
+            String query = "select count(*) as starring_num from stars_in_movies where starId = ?";
+
+            PreparedStatement statement = dbcon.prepareStatement(query);
+            statement.setString(1, starId);
+
+            ResultSet starringNumResultSet = statement.executeQuery();
+            if (starringNumResultSet.next()) {
+                json.addProperty("starringNum", starringNumResultSet.getString("starring_num"));
+            }
+
             resultArray.add(json);
         }
 

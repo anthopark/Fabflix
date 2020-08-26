@@ -58,8 +58,8 @@ public class MovieListServlet extends HttpServlet {
                 }
 
 
-                ResultSet genresSet = getNGenresInMovie(dbcon, movieId, 3);
-                ResultSet starsSet = getNStarsInMovie(dbcon, movieId, 3);
+                ResultSet genresSet = getGenresInMovie(dbcon, movieId);
+                ResultSet starsSet = getStarsInMovie(dbcon, movieId);
 
                 JsonArray genres = buildJsonArray(genresSet, new ArrayList<String>(Arrays.asList("id", "name")));
                 JsonArray stars = buildJsonArray(starsSet, new ArrayList<String>(Arrays.asList("id", "name", "birthYear")));
@@ -126,27 +126,25 @@ public class MovieListServlet extends HttpServlet {
         return statement.executeQuery();
     }
 
-    private ResultSet getNGenresInMovie(Connection dbcon, String movieId, int numResult)
+    private ResultSet getGenresInMovie(Connection dbcon, String movieId)
             throws java.sql.SQLException {
         String query = "select * from genres where id in " +
-                "(select genreId from genres_in_movies as gim where gim.movieId = ?) limit ?";
+                "(select genreId from genres_in_movies as gim where gim.movieId = ?) order by name asc";
 
         PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setString(1, movieId);
-        statement.setInt(2, numResult);
 
         return statement.executeQuery();
 
     }
 
-    private ResultSet getNStarsInMovie(Connection dbcon, String movieId, int numResult)
+    private ResultSet getStarsInMovie(Connection dbcon, String movieId)
             throws java.sql.SQLException {
-        String query = "select * from stars where id in " +
-                "(select starId from stars_in_movies as sim where sim.movieId = ?) limit ?";
+        String query = "select * from stars as s" +
+                " where s.id in (select starId from stars_in_movies as sim where sim.movieId = ?)";
 
         PreparedStatement statement = dbcon.prepareStatement(query);
         statement.setString(1, movieId);
-        statement.setInt(2, numResult);
 
         return statement.executeQuery();
 

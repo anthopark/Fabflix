@@ -46,7 +46,7 @@ function buildBrowseTitleSQL(startingChar) {
     if (startingChar === '*') {
         return `select * from movies where lower(title) regexp '^[^a-zA-Z0-9\s].*$';`;
     }
-    return `select * from movies where lower(title) like '${startingChar}%';`;
+    return `select * from movies where lower(title) like '${startingChar}%' limit 25 offset 0;`;
 }
 
 function handleMovieListResult(resultData) {

@@ -1,0 +1,13 @@
+.movie-result-box {
+    background-color: rgba(66, 66, 66, 0.548);
+    margin: auto;
+    padding: 3rem;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+
+.movie-table-box {
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+}

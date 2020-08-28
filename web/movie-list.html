@@ -26,51 +26,60 @@
     </nav>
 
     <div class="container">
-        <div class="movie-result-box">
-            <div class="row listing-control-box">
-                <div class="col text-div">
-                    <h3 id="list-title">Showing result for...<span id="movie-query"></span></h3>
-                </div>
-                <div class="col listing-controls">
-                    <div class="dropdown sorting-dropdown float-right">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Number of Items
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">10</a>
-                            <a class="dropdown-item" href="#">25</a>
-                            <a class="dropdown-item" href="#">50</a>
-                            <a class="dropdown-item" href="#">100</a>
-                        </div>
-                    </div>
-                    <div class="dropdown sorting-dropdown float-right">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Sort Order
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                            <a class="dropdown-item" href="#">high to low</a>
-                            <a class="dropdown-item" href="#">low to high</a>
-                        </div>
-                    </div>
-                    <div class="dropdown sorting-dropdown float-right">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Sort By
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">title then rating</a>
-                            <a class="dropdown-item" href="#">rating then title</a>
-                        </div>
+        <div class="listing-control-box">
+            <div class="listing-controls d-flex flex-row-reverse">
+                <div class="dropdown sorting-dropdown">
+                    Sort by
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Title
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Title (then rating)</a>
+                        <a class="dropdown-item" href="#">Rating (then title)</a>
                     </div>
                 </div>
-            </div>
-            <div class="movie-list-box">
+                <div class="dropdown sorting-dropdown">
+                    Sort order
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        high to low
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
+                        <a class="dropdown-item" href="#">high to low</a>
+                        <a class="dropdown-item" href="#">low to high</a>
+                    </div>
+                </div>
+                <div class="dropdown sorting-dropdown">
+                    Items display
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        10
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">10</a>
+                        <a class="dropdown-item" href="#">25</a>
+                        <a class="dropdown-item" href="#">50</a>
+                        <a class="dropdown-item" href="#">100</a>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="movie-result-box">
+            <div class="listing-control-box">
+                <div class="row jump-box">
+                    <div class="col"><button class="btn btn-primary disabled"><< Prev</button></div>
+                    <div class="col d-flex flex-row-reverse"><button class="btn btn-primary">Next >></button></div>
+                </div>
+
+                <div class="movie-list-box">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
     </div>
 
 

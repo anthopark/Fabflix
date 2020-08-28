@@ -122,7 +122,23 @@ function handleMovieListResult(resultData) {
     })
 }
 
+function updateDropdownButtonText(e) {
+    let value = e.target.textContent;
+    if (value.includes('(')) {
+        value = value.split(' ')[0]
+    }
+    e.target.parentElement.previousElementSibling.textContent = value
+    
+}
+
+document.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', updateDropdownButtonText);
+})
+
 let sqlQuery = null;
+let sortByOption = 'titleThenRating'; // 
+let sortOrderOption = 'highToLow';
+
 
 if (getParameterByName('browse')) {
     if (getParameterByName('genre')) {

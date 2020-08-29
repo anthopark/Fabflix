@@ -18,8 +18,9 @@ function handleSearchSubmit(e) {
         return
     }
 
-    const url = buildURLWithParams(titleVal, yearVal, directorVal, starVal);
+    let url = buildURLWithParams(titleVal, yearVal, directorVal, starVal);
     console.log(url);
+    url = url + '&sortBy=rating&sortOrder=highToLow&firstItem=0&numItem=25'
     window.location.replace(url);
 }
 

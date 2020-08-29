@@ -15,7 +15,7 @@
 <body>
 
     <nav class="navbar navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">
+        <a href="landing.html" class="navbar-brand">
             <h1 class="brand-title">FABFLIX</h1>
         </a>
         <ul class="navbar-nav">
@@ -30,30 +30,30 @@
             <div class="listing-controls d-flex flex-row-reverse">
                 <div class="dropdown sorting-dropdown">
                     Sort by
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="sort-by-btn"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Title
+                        Rating
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Title (then rating)</a>
-                        <a class="dropdown-item" href="#">Rating (then title)</a>
+                        <a class="dropdown-item sort-by-option" href="#">Title (then rating)</a>
+                        <a class="dropdown-item sort-by-option" href="#">Rating (then title)</a>
                     </div>
                 </div>
                 <div class="dropdown sorting-dropdown">
                     Sort order
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="sort-order-btn"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         high to low
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                        <a class="dropdown-item" href="#">high to low</a>
-                        <a class="dropdown-item" href="#">low to high</a>
+                        <a class="dropdown-item sort-order-option" href="#">high to low</a>
+                        <a class="dropdown-item sort-order-option" href="#">low to high</a>
                     </div>
                 </div>
                 <div class="dropdown sorting-dropdown">
                     Items display
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="num-display-btn"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         10
                     </button>
@@ -94,6 +94,7 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
     <script src="static/js/logout.js"></script>
+    <script src="static/js/movie-list-utils.js"></script>
     <script src="static/js/movie-list.js"></script>
 </body>
 

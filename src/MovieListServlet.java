@@ -50,12 +50,13 @@ public class MovieListServlet extends HttpServlet {
                 String movieYear = movieResults.getString("year");
                 String movieDirector = movieResults.getString("director");
                 String movieId = movieResults.getString("id");
+                String movieRating = movieResults.getString("rating");
 
-                String movieRating = null;
-                ResultSet theMovieRatingSet = getMovieRating(dbcon, movieId);
-                if (theMovieRatingSet.next()) {
-                    movieRating = theMovieRatingSet.getString("rating");
-                }
+//                String movieRating = null;
+//                ResultSet theMovieRatingSet = getMovieRating(dbcon, movieId);
+//                if (theMovieRatingSet.next()) {
+//                    movieRating = theMovieRatingSet.getString("rating");
+//                }
 
 
                 ResultSet genresSet = getGenresInMovie(dbcon, movieId);
@@ -65,13 +66,13 @@ public class MovieListServlet extends HttpServlet {
                 JsonArray stars = buildJsonArrayStar(dbcon, starsSet, new ArrayList<String>(Arrays.asList("id", "name", "birthYear")));
 
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("movie_id", movieId);
-                jsonObject.addProperty("movie_title", movieTitle);
-                jsonObject.addProperty("movie_year", movieYear);
-                jsonObject.addProperty("movie_director", movieDirector);
-                jsonObject.add("movie_genres", genres);
-                jsonObject.add("movie_stars", stars);
-                jsonObject.addProperty("rating", movieRating);
+                jsonObject.addProperty("movieId", movieId);
+                jsonObject.addProperty("movieTitle", movieTitle);
+                jsonObject.addProperty("movieYear", movieYear);
+                jsonObject.addProperty("movieDirector", movieDirector);
+                jsonObject.add("movieGenres", genres);
+                jsonObject.add("movieStars", stars);
+                jsonObject.addProperty("movieRating", movieRating);
 
                 jsonArray.add(jsonObject);
 

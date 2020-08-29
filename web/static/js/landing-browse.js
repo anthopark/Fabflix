@@ -44,7 +44,7 @@ document.querySelector('#genre-list').addEventListener('click', (e) => {
         const genreId = e.target.parentElement.id.split('-')[1];
         console.log(genreId);
         // build url
-        const url = `movie-list.html?browse=1&genre=1&id=${genreId}`;
+        const url = `movie-list.html?browse=1&genre=1&id=${genreId}&sortBy=rating&sortOrder=highToLow&firstItem=0&numItem=25`;
         // redirect to movie-list.html
         window.location.replace(url);
     }
@@ -77,7 +77,7 @@ function registerTitleLinkEvent() {
         elem.addEventListener('click', (e) => {
             e.preventDefault();
             if (e.target.className === 'title-link') {
-                const url = `movie-list.html?browse=1&title=${e.target.dataset.value.toLowerCase()}`;
+                const url = `movie-list.html?browse=1&title=${e.target.dataset.value.toLowerCase()}&sortBy=rating&sortOrder=highToLow&firstItem=0&numItem=25`;
                 console.log(url);
                 window.location.replace(url);
             }

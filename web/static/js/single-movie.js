@@ -16,35 +16,65 @@ function getParameterByName(target) {
 
 function handleSingleMovieResult(movieData) {
     console.log(movieData);
-    const movieTitle = document.querySelector("#movie-title");
-    const movieInfo = document.querySelector("#movie-info");
-    const genreList = document.querySelector("#genre-list");
-    const starList = document.querySelector("#star-list");
+    const movieTitleEl = document.querySelector("#movie-title");
+    const movieYearEl = document.querySelector('#movie-year');
+    const movieDirectorEl = document.querySelector('#movie-director');
+    const movieRatingEl = document.querySelector('#movie-rating');
 
-    movieTitle.textContent = movieData[0].movie_title;
-    movieInfo.innerHTML = `
-        <p>Year: ${movieData[0].movie_year}</p>
-        <p>Director: ${movieData[0].movie_director}</p>
-        <p>Rating: ${movieData[0].rating}</p>
-    `;
+    const genreListEl = document.querySelector("#genre-list");
+    const starListEl = document.querySelector("#star-list");
 
-    movieData[0].genres.forEach(g => {
+    movieTitleEl.textContent = movieData.movieTitle;
+    movieYearEl.textContent = ` (${movieData.movieYear})`;
+    movieRatingEl.textContent = `⭐ ${movieData.movieRating}`
+    movieDirectorEl.textContent = movieData.movieDirector;
+
+    
+    movieData.genres.sort((g1, g2) => {
+        if (g1.name < g2.name) return -1;
+        if (g1.name > g2.name) return 1;
+        if (g1.name == g2.name) return 0;
+    })
+
+    movieData.genres.forEach(g => {
         let li = document.createElement('li');
-        li.innerHTML = g.name;
-        genreList.appendChild(li);
+        li.innerHTML = 
+        `<h5>
+            <a href="movie-list.html?browse=1&genre=1&id=${g.id}&sortBy=rating&sortOrder=highToLow&firstItem=0&numItem=25">${g.name}</a>
+        </h5>`;
+        genreListEl.appendChild(li);
     });
 
-    movieData[0].stars.forEach(s => {
+    movieData.stars.sort((s1, s2) => {
+        if (s1.starringNum > s2.starringNum) return -1;
+        if (s1.starringNum < s2.starringNum) return 1;
+
+        if (s1.name < s2.name) return -1;
+        if (s1.name > s2.name) return 1;
+    });
+
+    console.log(movieData.stars);
+
+    movieData.stars.forEach(s => {
         let li = document.createElement('li');
-        li.innerHTML = `<a href="single-star.html?id=${s.id}">${s.name}</a>`;
-        starList.appendChild(li);
+        li.innerHTML = 
+        `<h5>
+            <a href="single-star.html?id=${s.id}">${s.name}</a>
+        </h5>`;
+        starListEl.appendChild(li);
     });
 
 
 }
+
+document.querySelector('#prev-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.history.back();
+})
 
 let movieId = getParameterByName("id");
 
 fetch(`api/single-movie?id=${movieId}`)
     .then(response => response.json())
     .then(data => handleSingleMovieResult(data));
+

@@ -1,0 +1,20 @@
+.movie-info-box {
+    background-color: rgba(66, 66, 66, 0.548);
+    margin: auto;
+    padding: 3rem;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+
+.jump-box {
+    margin-bottom: .5rem;
+}
+
+.movie-title-box {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.movie-director-box {
+    margin: 1rem 0;
+}

@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
 public class SingleMovieServlet extends HttpServlet {
@@ -31,22 +33,23 @@ public class SingleMovieServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
+
+        JsonObject resultData = new JsonObject();
+
         try {
-
             Connection dbcon = dataSource.getConnection();
-            JsonArray resultArray = new JsonArray();
-            JsonObject resultData = new JsonObject();
-
             retrieveMovieInfo(dbcon, movieId, resultData);
 
+
+            ResultSet starsSet = getStarsInMovie(dbcon, movieId);
+            JsonArray stars = buildJsonArrayStar(dbcon, starsSet, new ArrayList<String>(Arrays.asList("id", "name", "birthYear")));
             JsonArray genres = getMovieGenresAll(dbcon, movieId);
-            JsonArray stars = getMovieStarsAll(dbcon, movieId);
 
             resultData.add("genres", genres);
             resultData.add("stars", stars);
-            resultArray.add(resultData);
 
-            out.write(resultArray.toString());
+
+            out.write(resultData.toString());
             response.setStatus(200);
 
             dbcon.close();
@@ -72,9 +75,9 @@ public class SingleMovieServlet extends HttpServlet {
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            result.addProperty("movie_title", rs.getString("title"));
-            result.addProperty("movie_year", rs.getString("year"));
-            result.addProperty("movie_director", rs.getString("director"));
+            result.addProperty("movieTitle", rs.getString("title"));
+            result.addProperty("movieYear", rs.getString("year"));
+            result.addProperty("movieDirector", rs.getString("director"));
         }
 
         String query2 = "select * from ratings where movieId = ?";
@@ -83,7 +86,7 @@ public class SingleMovieServlet extends HttpServlet {
         ResultSet rs2 = statement2.executeQuery();
 
         if (rs2.next()) {
-            result.addProperty("rating", rs2.getString("rating"));
+            result.addProperty("movieRating", rs2.getString("rating"));
         }
     }
 
@@ -107,25 +110,44 @@ public class SingleMovieServlet extends HttpServlet {
         return result;
     }
 
-    private JsonArray getMovieStarsAll(Connection dbcon, String id)
+    private ResultSet getStarsInMovie(Connection dbcon, String movieId)
             throws java.sql.SQLException {
+        String query = "select * from stars as s" +
+                " where s.id in (select starId from stars_in_movies as sim where sim.movieId = ?)";
 
-        JsonArray result = new JsonArray();
-
-        String query = "select * from stars where id in (select starId from stars_in_movies as sim where sim.movieId = ?)";
         PreparedStatement statement = dbcon.prepareStatement(query);
-        statement.setString(1, id);
-        ResultSet rs = statement.executeQuery();
+        statement.setString(1, movieId);
+
+        return statement.executeQuery();
+
+    }
+
+    private JsonArray buildJsonArrayStar(Connection dbcon, ResultSet rs, ArrayList<String> properties)
+            throws java.sql.SQLException {
+        JsonArray resultArray = new JsonArray();
 
         while (rs.next()) {
-            JsonObject data = new JsonObject();
-            data.addProperty("id", rs.getString("id"));
-            data.addProperty("name", rs.getString("name"));
-            data.addProperty("birthYear", rs.getString("birthYear"));
-            result.add(data);
+            JsonObject json = new JsonObject();
+
+            for (String prop : properties) {
+                json.addProperty(prop, rs.getString(prop));
+            }
+
+            String starId = rs.getString("id");
+
+            String query = "select count(*) as starring_num from stars_in_movies where starId = ?";
+
+            PreparedStatement statement = dbcon.prepareStatement(query);
+            statement.setString(1, starId);
+
+            ResultSet starringNumResultSet = statement.executeQuery();
+            if (starringNumResultSet.next()) {
+                json.addProperty("starringNum", starringNumResultSet.getString("starring_num"));
+            }
+
+            resultArray.add(json);
         }
 
-
-        return result;
+        return resultArray;
     }
 }

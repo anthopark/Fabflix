@@ -58,10 +58,10 @@
                         10
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">10</a>
-                        <a class="dropdown-item" href="#">25</a>
-                        <a class="dropdown-item" href="#">50</a>
-                        <a class="dropdown-item" href="#">100</a>
+                        <a class="dropdown-item num-display" href="#">10</a>
+                        <a class="dropdown-item num-display" href="#">25</a>
+                        <a class="dropdown-item num-display" href="#">50</a>
+                        <a class="dropdown-item num-display" href="#">100</a>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,9 @@
         <div class="movie-result-box">
             <div class="listing-control-box">
                 <div class="row jump-box">
-                    <div class="col"><button class="btn btn-primary disabled"><< Prev</button></div>
-                    <div class="col d-flex flex-row-reverse"><button class="btn btn-primary">Next >></button></div>
+                    <div class="col"><button class="btn btn-primary disabled" id="prev-btn"><< Prev</button></div>
+                    <div class="col page-info"><h5>Page: <span id="page-num"></span></h5></div>
+                    <div class="col d-flex flex-row-reverse"><button class="btn btn-primary" id="next-btn">Next >></button></div>
                 </div>
 
                 <div class="movie-list-box">
